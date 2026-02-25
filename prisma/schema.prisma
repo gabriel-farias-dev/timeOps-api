@@ -57,9 +57,9 @@ model Timesheets {
   status String
   created_at DateTime @default(now())
   approved_at DateTime?
-  approved_at Int?
+  approved_by Int?
 
-  user Login_User @relation(fields: [user_id,approved_at], references: [id])
+  user Login_User @relation(fields: [user_id,approved_by], references: [id])
   project Projects @relation(fields: [project_id], references: [id])
 
 }
