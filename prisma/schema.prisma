@@ -22,3 +22,44 @@ model Login_User {
   active Boolean
   createdAt DateTime @default(now())
 }
+
+model Contracts {
+  id Int @id @default(autoincrement())
+  contract_number String @unique
+  client_name String?
+  start_date DateTime?
+  end_date DateTime?
+  total_value Float?
+  status String?
+  created_at DateTime @default(now())
+}
+
+model Projects {
+  id Int @id @default(autoincrement())
+  name String
+  description String?
+  contract_id Int 
+  start_date DateTime
+  end_date DateTime?
+  status String?
+  created_at DateTime @default(now())
+
+  contracts Contracts @relation(fields: [contract_id], references: [id])
+  }
+
+model Timesheets {
+  id Int @id @default(autoincrement())
+  user_id Int
+  project_id Int
+  date_work DateTime
+  hours_worked Int
+  description String?
+  status String
+  created_at DateTime @default(now())
+  approved_at DateTime?
+  approved_at Int?
+
+  user Login_User @relation(fields: [user_id,approved_at], references: [id])
+  project Projects @relation(fields: [project_id], references: [id])
+
+}
