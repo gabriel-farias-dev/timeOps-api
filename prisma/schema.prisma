@@ -67,7 +67,7 @@ model Timesheets {
   approved_by Int?
 
   user_work Login_User @relation("user_work",fields: [user_id], references: [id])
-  user_approved Login_User @relation("user_approved",fields: [approved_by], references: [id])
+  user_approved Login_User? @relation("user_approved",fields: [approved_by], references: [id])
   project Projects @relation(fields: [project_id], references: [id])
 
 }
