@@ -21,6 +21,9 @@ model Login_User {
   role String
   active Boolean
   createdAt DateTime @default(now())
+
+  user_work Timesheets[] @relation("user_work")
+  user_approved  Timesheets[] @relation("user_approved")
 }
 
 model Contracts {
@@ -32,6 +35,8 @@ model Contracts {
   total_value Float?
   status String?
   created_at DateTime @default(now())
+
+  projects  Projects[]
 }
 
 model Projects {
@@ -45,6 +50,8 @@ model Projects {
   created_at DateTime @default(now())
 
   contracts Contracts @relation(fields: [contract_id], references: [id])
+
+  timesheets Timesheets[]
   }
 
 model Timesheets {
@@ -59,7 +66,8 @@ model Timesheets {
   approved_at DateTime?
   approved_by Int?
 
-  user Login_User @relation(fields: [user_id,approved_by], references: [id])
+  user_work Login_User @relation("user_work",fields: [user_id], references: [id])
+  user_approved Login_User @relation("user_approved",fields: [approved_by], references: [id])
   project Projects @relation(fields: [project_id], references: [id])
 
 }
